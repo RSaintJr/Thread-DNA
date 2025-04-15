@@ -12,19 +12,6 @@ public class SearchB {
         return linha.matches("[ATCG]+");
     }
 
-    private String fitaComplementar(String fita) {
-        return fita
-                .replace('A', 't')
-                .replace('T', 'a')
-                .replace('C', 'g')
-                .replace('G', 'c')
-                .toUpperCase()
-                .replace('A', 'T')
-                .replace('C', 'G')
-                .replace('G', 'C')
-                .replace('T', 'A');
-    }
-
     public void searchFile() throws IOException {
         for (File arquivo : arquivos) {
             BufferedReader br = new BufferedReader(new FileReader(arquivo));
@@ -42,7 +29,7 @@ public class SearchB {
                 linha = linha.trim();
                 if (fitaValida(linha)) {
                     validas++;
-                    bw.write(fitaComplementar(linha));
+                    bw.write(new StringBuilder(linha).reverse().toString());
                 } else {
                     invalidas++;
                     bw.write("***FITA INVALIDA - " + linha);
